@@ -152,4 +152,21 @@ RSpec.describe Faraday::OAuth1::Request, type: :request do # rubocop:disable RSp
 
     include_examples 'oauth1 request'
   end
+
+  context 'with param auth method' do
+    let(:auth_methods) { ['param'] }
+
+    def auth_value(response)
+      Faraday::Utils.parse_query response.env[:url].query
+    end
+
+    def auth_values(response)
+      auth = auth_value(response)
+      return unless auth
+
+      auth
+    end
+
+    include_examples 'oauth1 request'
+  end
 end
